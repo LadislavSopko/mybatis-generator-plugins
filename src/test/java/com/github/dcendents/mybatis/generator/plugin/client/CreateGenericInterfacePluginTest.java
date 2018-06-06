@@ -27,6 +27,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 
@@ -42,6 +43,8 @@ public class CreateGenericInterfacePluginTest {
 	private Context context;
 	@Mock
 	private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
+	@Mock
+	private CommentGeneratorConfiguration commentGeneratorConfiguration;
 
 	@Mock
 	private Method method;
@@ -62,8 +65,11 @@ public class CreateGenericInterfacePluginTest {
 	@Before
 	public void init() throws Exception {
 		given(context.getJavaClientGeneratorConfiguration()).willReturn(javaClientGeneratorConfiguration);
+		given(context.getCommentGeneratorConfiguration()).willReturn(commentGeneratorConfiguration);
+		given(context.getTargetRuntime()).willReturn("\"MyBatis3DynamicSql\"");
 
 		given(javaClientGeneratorConfiguration.getTargetProject()).willReturn("src/main/java");
+		given(commentGeneratorConfiguration.getProperty("suppressAllComments")).willReturn("true");
 
 		given(method.getParameters()).willReturn(Arrays.asList(parameter1, parameter2));
 
@@ -71,7 +77,8 @@ public class CreateGenericInterfacePluginTest {
 		plugin.setContext(context);
 
 		plugin.getProperties().put(CreateGenericInterfacePlugin.INTERFACE, INTERFACE);
-//		plugin.getProperties().put(AlterResultMapPlugin.RESULT_MAP_ID, RESULT_MAP_ID);
+		// plugin.getProperties().put(AlterResultMapPlugin.RESULT_MAP_ID,
+		// RESULT_MAP_ID);
 		plugin.validate(new ArrayList<String>());
 	}
 
@@ -94,6 +101,7 @@ public class CreateGenericInterfacePluginTest {
 		// Given
 		CreateGenericInterfacePlugin instance = new CreateGenericInterfacePlugin();
 		instance.getProperties().put(CreateGenericInterfacePlugin.INTERFACE, INTERFACE);
+		instance.setContext(context);
 
 		// When
 		List<String> warnings = new ArrayList<>();
@@ -125,7 +133,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok).isTrue();
 
-		ArgumentCaptor<FullyQualifiedJavaType> fullyQualifiedJavaTypeCaptor = ArgumentCaptor.forClass(FullyQualifiedJavaType.class);
+		ArgumentCaptor<FullyQualifiedJavaType> fullyQualifiedJavaTypeCaptor = ArgumentCaptor
+				.forClass(FullyQualifiedJavaType.class);
 		verify(interfaze).addSuperInterface(fullyQualifiedJavaTypeCaptor.capture());
 
 		then(fullyQualifiedJavaTypeCaptor.getValue()).isNotNull();
@@ -144,7 +153,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -159,7 +169,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -174,7 +185,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -189,7 +201,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -204,7 +217,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -219,7 +233,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -234,7 +249,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -249,7 +265,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -264,7 +281,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -279,7 +297,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -294,7 +313,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -309,7 +329,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -319,12 +340,14 @@ public class CreateGenericInterfacePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
+		boolean ok2 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, topLevelClass,
+				introspectedTable);
 
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -339,7 +362,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 	@Test
@@ -354,7 +378,8 @@ public class CreateGenericInterfacePluginTest {
 		// Then
 		then(ok1).isTrue();
 		then(ok2).isTrue();
-		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class), Matchers.<FullyQualifiedJavaType>anyVararg());
+		verify(plugin, times(2)).addGenericMethod(eq(method), any(FullyQualifiedJavaType.class),
+				Matchers.<FullyQualifiedJavaType>anyVararg());
 	}
 
 }
