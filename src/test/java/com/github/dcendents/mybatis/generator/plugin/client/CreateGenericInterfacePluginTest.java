@@ -61,6 +61,9 @@ public class CreateGenericInterfacePluginTest {
 	private Parameter parameter2;
 
 	private static final String INTERFACE = "some.Interface";
+	private static final String CONTROLLER_NS = "some.ns";
+	private static final String CONTROLLER_BASE = "restControlerBase";
+	private static final String API_BASE_PATH = "restBasePath";
 
 	@Before
 	public void init() throws Exception {
@@ -77,6 +80,9 @@ public class CreateGenericInterfacePluginTest {
 		plugin.setContext(context);
 
 		plugin.getProperties().put(CreateGenericInterfacePlugin.INTERFACE, INTERFACE);
+		plugin.getProperties().put(CreateGenericInterfacePlugin.CONTROLLER_NS, CONTROLLER_NS);
+		plugin.getProperties().put(CreateGenericInterfacePlugin.CONTROLLER_BASE, CONTROLLER_BASE);
+		plugin.getProperties().put(CreateGenericInterfacePlugin.API_BASE_PATH, API_BASE_PATH);
 		// plugin.getProperties().put(AlterResultMapPlugin.RESULT_MAP_ID,
 		// RESULT_MAP_ID);
 		plugin.validate(new ArrayList<String>());
@@ -101,6 +107,9 @@ public class CreateGenericInterfacePluginTest {
 		// Given
 		CreateGenericInterfacePlugin instance = new CreateGenericInterfacePlugin();
 		instance.getProperties().put(CreateGenericInterfacePlugin.INTERFACE, INTERFACE);
+		instance.getProperties().put(CreateGenericInterfacePlugin.CONTROLLER_NS, CONTROLLER_NS);
+		instance.getProperties().put(CreateGenericInterfacePlugin.CONTROLLER_BASE, CONTROLLER_BASE);
+		instance.getProperties().put(CreateGenericInterfacePlugin.API_BASE_PATH, API_BASE_PATH);
 		instance.setContext(context);
 
 		// When

@@ -28,9 +28,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateGenericInterfacePlugin extends PluginAdapter {
 	public static final String INTERFACE = "interface";
+	public static final String CONTROLLER_NS = "restControlerNs";
+	public static final String CONTROLLER_BASE = "restControlerBase";
+	public static final String API_BASE_PATH = "restBasePath";
 
+	private String apiBasePath;
 	private String interfaceName;
 	private Interface genericInterface;
+
+	private String controllerNs;
+	private String controllerBase;
 
 	private FullyQualifiedJavaType genericModel = new FullyQualifiedJavaType("T");
 	private FullyQualifiedJavaType genericExample = new FullyQualifiedJavaType("U");
@@ -44,17 +51,40 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 	private Map<IntrospectedTable, FullyQualifiedJavaType> models;
 	private Map<IntrospectedTable, FullyQualifiedJavaType> examples;
 	private Map<IntrospectedTable, FullyQualifiedJavaType> ids;
+	private Map<IntrospectedTable, TopLevelClass> controllers;
 
 	private boolean suppressAllComments = false;
 	private String targetRuntime = "MyBatis3";
 
 	@Override
 	public boolean validate(List<String> warnings) {
+		apiBasePath = properties.getProperty(API_BASE_PATH);
+
+		if (!stringHasValue(interfaceName)) {
+			apiBasePath = "/api/";
+		}
+
 		interfaceName = properties.getProperty(INTERFACE);
 
 		String warning = "Property %s not set for plugin %s";
 		if (!stringHasValue(interfaceName)) {
 			warnings.add(String.format(warning, INTERFACE, this.getClass().getSimpleName()));
+			return false;
+		}
+
+		controllerNs = properties.getProperty(CONTROLLER_NS);
+
+		warning = "Property %s not set for plugin %s";
+		if (!stringHasValue(controllerNs)) {
+			warnings.add(String.format(warning, CONTROLLER_NS, this.getClass().getSimpleName()));
+			return false;
+		}
+
+		controllerBase = properties.getProperty(CONTROLLER_BASE);
+
+		warning = "Property %s not set for plugin %s";
+		if (!stringHasValue(controllerBase)) {
+			warnings.add(String.format(warning, CONTROLLER_BASE, this.getClass().getSimpleName()));
 			return false;
 		}
 
@@ -101,6 +131,7 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 		models = new HashMap<>();
 		examples = new HashMap<>();
 		ids = new HashMap<>();
+		controllers = new HashMap<>();
 	}
 
 	@Override
@@ -112,7 +143,61 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 
 		models.add(genericInterfaceFile);
 
+		// for all controllers
+		for (TopLevelClass tc : controllers.values()) {
+			GeneratedJavaFile genericInterfaceFileC = new GeneratedJavaFile(tc,
+					context.getJavaClientGeneratorConfiguration().getTargetProject(), new DefaultJavaFormatter());
+
+			models.add(genericInterfaceFileC);
+		}
+
 		return models;
+	}
+
+	private void generateClassForController(IntrospectedTable introspectedTable, Interface interfaze) { // table and
+		String modelName = models.containsKey(introspectedTable) ? models.get(introspectedTable).getShortName()
+				: "somename";
+
+		FullyQualifiedJavaType controllerClass = new FullyQualifiedJavaType(
+				controllerNs + "." + modelName + "Controller");
+		FullyQualifiedJavaType baseControlerType = new FullyQualifiedJavaType(controllerBase);
+		baseControlerType.addTypeArgument(models.get(introspectedTable));
+		baseControlerType.addTypeArgument(interfaze.getType());
+
+		TopLevelClass tableController = new TopLevelClass(controllerClass);
+		tableController.setSuperClass(baseControlerType);
+		tableController.setVisibility(JavaVisibility.PUBLIC);
+		tableController.addImportedType(models.get(introspectedTable));
+		tableController.addImportedType(interfaze.getType());
+		if (interfaze.getType() != null) {
+			tableController.addImportedType(new FullyQualifiedJavaType(
+					interfaze.getType().getPackageName() + "." + modelName + "DynamicSqlSupport"));
+		}
+
+		tableController.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.session.SqlSessionFactory"));
+		tableController
+				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.CrossOrigin"));
+		tableController
+				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.RequestMapping"));
+		tableController
+				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.RestController"));
+		tableController.addAnnotation("@CrossOrigin(origins = { \"*\" }, maxAge = 3600)");
+		tableController.addAnnotation("@RestController");
+		tableController.addAnnotation("@RequestMapping({ \"/apinew/" + modelName + "\" })");
+
+		Method ctor = new Method(controllerClass.getShortName());
+		ctor.setConstructor(true);
+		ctor.setVisibility(JavaVisibility.PUBLIC);
+		Parameter param = new Parameter(new FullyQualifiedJavaType("org.apache.ibatis.session.SqlSessionFactory"),
+				"sqlSessionFactory");
+		ctor.addParameter(param);
+
+		ctor.getBodyLines().clear();
+		ctor.addBodyLine(
+				String.format("super(sqlSessionFactory, new %sDynamicSqlSupport.%s());", modelName, modelName));
+
+		tableController.addMethod(ctor);
+		controllers.put(introspectedTable, tableController);
 	}
 
 	@Override
@@ -128,6 +213,8 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 		}
 
 		interfaze.addSuperInterface(type);
+
+		generateClassForController(introspectedTable, interfaze);
 
 		return true;
 	}
