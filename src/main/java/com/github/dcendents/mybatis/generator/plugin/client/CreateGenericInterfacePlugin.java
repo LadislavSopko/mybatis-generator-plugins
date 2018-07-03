@@ -167,7 +167,17 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 		TopLevelClass tableController = new TopLevelClass(controllerClass);
 		tableController.setSuperClass(baseControlerType);
 		tableController.setVisibility(JavaVisibility.PUBLIC);
-		tableController.addImportedType(models.get(introspectedTable));
+
+		String tns = "";
+		// get model namespace
+		try {
+			tns = context.getJavaModelGeneratorConfiguration().getTargetPackage() + "."
+					+ introspectedTable.getTableConfiguration().getSchema().toLowerCase();
+		} catch (Exception e) {
+			// ...
+		}
+
+		tableController.addImportedType(new FullyQualifiedJavaType(tns + "." + modelName));
 		tableController.addImportedType(interfaze.getType());
 		if (interfaze.getType() != null) {
 			tableController.addImportedType(new FullyQualifiedJavaType(
@@ -183,7 +193,7 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.RestController"));
 		tableController.addAnnotation("@CrossOrigin(origins = { \"*\" }, maxAge = 3600)");
 		tableController.addAnnotation("@RestController");
-		tableController.addAnnotation("@RequestMapping({ \"/apinew/" + modelName + "\" })");
+		tableController.addAnnotation("@RequestMapping({ \"" + apiBasePath + modelName.toLowerCase() + "\" })");
 
 		Method ctor = new Method(controllerClass.getShortName());
 		ctor.setConstructor(true);
@@ -203,6 +213,7 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 	@Override
 	public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
+
 		FullyQualifiedJavaType type = new FullyQualifiedJavaType(interfaceName);
 		type.addTypeArgument(models.get(introspectedTable));
 		if (examples.containsKey(introspectedTable)) {
@@ -233,6 +244,7 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 			}
 			genericMethod.addAnnotation("@Generated(\"org.mybatis.generator.api.MyBatisGenerator\")");
 			genericMethod.setReturnType(returnType);
+			genericMethod.setDefault(true);
 
 			for (int i = 0; i < method.getParameters().size(); i++) {
 				Parameter parameter = method.getParameters().get(i);
@@ -241,6 +253,11 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 				Parameter genericParameter = new Parameter(paramType, parameter.getName());
 				genericMethod.addParameter(genericParameter);
 			}
+
+			genericMethod.getBodyLines().clear();
+			String castType = returnType.isPrimitive() ? returnType.getPrimitiveTypeWrapper().getShortName()
+					: returnType.getShortName();
+			genericMethod.addBodyLine(String.format("return (%s)null;", castType));
 
 			genericInterface.addMethod(genericMethod);
 
@@ -349,27 +366,28 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 	}
 
 	private void addClientInsert(Method method, IntrospectedTable introspectedTable) {
-		if (method.getParameters().size() > 0) {
-			models.put(introspectedTable, method.getParameters().get(0).getType());
-		}
+		/*
+		 * if (method.getParameters().size() > 0) { models.put(introspectedTable,
+		 * method.getParameters().get(0).getType()); }
+		 */
 		addGenericMethod(method, FullyQualifiedJavaType.getIntInstance(), genericModel);
 	}
 
 	@Override
 	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
-		addClientSelectByExampleWithBLOBs(method);
+		addClientSelectByExampleWithBLOBs(method, introspectedTable);
 		return true;
 	}
 
 	@Override
 	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
-		addClientSelectByExampleWithBLOBs(method);
+		addClientSelectByExampleWithBLOBs(method, introspectedTable);
 		return true;
 	}
 
-	private void addClientSelectByExampleWithBLOBs(Method method) {
+	private void addClientSelectByExampleWithBLOBs(Method method, IntrospectedTable introspectedTable) {
 
 		if (this.targetRuntime.equals("MyBatis3DynamicSql")) {
 			// org.mybatis.dynamic.sql.select.QueryExpressionDSL<org.mybatis.dynamic.sql.select.MyBatis3SelectModelAdapter<List<ProgDtl>>>
@@ -379,6 +397,10 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 			FullyQualifiedJavaType type1 = new FullyQualifiedJavaType(
 					"org.mybatis.dynamic.sql.select.QueryExpressionDSL");
 			type1.addTypeArgument(type);
+
+			// cache models QueryExpressionDSL<MyBatis3SelectModelAdapter<List<EmitDes>>>
+			models.put(introspectedTable, method.getReturnType().getTypeArguments().get(0).getTypeArguments().get(0)
+					.getTypeArguments().get(0));
 
 			addGenericMethod(method, type1, genericExample);
 		} else {
