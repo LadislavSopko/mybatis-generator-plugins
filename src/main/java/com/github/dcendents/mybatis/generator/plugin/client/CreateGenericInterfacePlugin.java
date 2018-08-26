@@ -31,6 +31,7 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 	public static final String CONTROLLER_NS = "restControlerNs";
 	public static final String CONTROLLER_BASE = "restControlerBase";
 	public static final String API_BASE_PATH = "restBasePath";
+	public static final String CONTROLER_ADDITIONAL_IMPORT = "restControlerImport";
 
 	private String apiBasePath;
 	private String interfaceName;
@@ -38,6 +39,7 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 
 	private String controllerNs;
 	private String controllerBase;
+	private String controllerAdditionalImport;
 
 	private FullyQualifiedJavaType genericModel = new FullyQualifiedJavaType("T");
 	private FullyQualifiedJavaType genericExample = new FullyQualifiedJavaType("U");
@@ -58,10 +60,16 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 
 	@Override
 	public boolean validate(List<String> warnings) {
+		controllerAdditionalImport = properties.getProperty(CONTROLER_ADDITIONAL_IMPORT);
+
+		if (!stringHasValue(controllerAdditionalImport)) {
+			controllerAdditionalImport = "";
+		}
+
 		apiBasePath = properties.getProperty(API_BASE_PATH);
 
-		if (!stringHasValue(interfaceName)) {
-			apiBasePath = "/api/";
+		if (!stringHasValue(apiBasePath)) {
+			apiBasePath = "\"/api\"";
 		}
 
 		interfaceName = properties.getProperty(INTERFACE);
@@ -185,15 +193,26 @@ public class CreateGenericInterfacePlugin extends PluginAdapter {
 		}
 
 		tableController.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.session.SqlSessionFactory"));
-		tableController
-				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.CrossOrigin"));
+		/*
+		 * tableController .addImportedType(new
+		 * FullyQualifiedJavaType("org.springframework.web.bind.annotation.CrossOrigin")
+		 * );
+		 */
 		tableController
 				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.RequestMapping"));
 		tableController
 				.addImportedType(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.RestController"));
-		tableController.addAnnotation("@CrossOrigin(origins = { \"*\" }, maxAge = 3600)");
+
+		if (controllerAdditionalImport.length() > 0) {
+			tableController.addImportedType(new FullyQualifiedJavaType(controllerAdditionalImport));
+		}
+
+		// tableController.addAnnotation("@CrossOrigin(origins = { \"*\" }, maxAge =
+		// 3600)");
 		tableController.addAnnotation("@RestController");
-		tableController.addAnnotation("@RequestMapping({ \"" + apiBasePath + modelName.toLowerCase() + "\" })");
+		// (value = AppConstants.API_URI_PREFIX + "/emitdes")
+		tableController
+				.addAnnotation("@RequestMapping(value = " + apiBasePath + " + \"/" + modelName.toLowerCase() + "\" )");
 
 		Method ctor = new Method(controllerClass.getShortName());
 		ctor.setConstructor(true);
