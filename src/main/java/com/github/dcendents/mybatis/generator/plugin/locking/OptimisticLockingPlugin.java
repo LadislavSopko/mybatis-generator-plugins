@@ -66,15 +66,7 @@ public class OptimisticLockingPlugin extends PluginAdapter {
 		return true;
 	}
 
-	@Override
-	public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		if (tableMatches(introspectedTable)) {
-			Method withLock = addMethod(method, introspectedTable);
-			topLevelClass.addMethod(withLock);
-		}
-
-		return true;
-	}
+	
 
 	Method addMethod(Method method, IntrospectedTable introspectedTable) {
 		IntrospectedColumn column = getColumn(introspectedTable);

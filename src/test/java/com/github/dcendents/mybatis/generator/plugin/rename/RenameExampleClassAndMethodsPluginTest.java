@@ -462,12 +462,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientCountByExampleMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientCountByExampleMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -479,12 +477,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientDeleteByExampleMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -496,12 +492,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientDeleteByPrimaryKeyMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -513,12 +507,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -530,12 +522,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -547,12 +537,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -564,12 +552,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -581,12 +567,10 @@ public class RenameExampleClassAndMethodsPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test

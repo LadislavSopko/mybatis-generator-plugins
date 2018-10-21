@@ -121,23 +121,7 @@ public class AlterResultMapPlugin extends PluginAdapter {
 	}
 
 	@Override
-	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		renameResultMapAttribute(method, introspectedTable);
-
-		return true;
-	}
-
-	@Override
 	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		renameResultMapAttribute(method, introspectedTable);
-
-		return true;
-	}
-
-	@Override
-	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		renameResultMapAttribute(method, introspectedTable);
 
@@ -153,14 +137,6 @@ public class AlterResultMapPlugin extends PluginAdapter {
 	}
 
 	@Override
-	public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		renameResultMapAttribute(method, introspectedTable);
-
-		return true;
-	}
-
-	@Override
 	public boolean clientSelectAllMethodGenerated(Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
 		renameResultMapAttribute(method, introspectedTable);
@@ -168,12 +144,6 @@ public class AlterResultMapPlugin extends PluginAdapter {
 		return true;
 	}
 
-	@Override
-	public boolean clientSelectAllMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		renameResultMapAttribute(method, introspectedTable);
-
-		return true;
-	}
+	
 
 }

@@ -159,13 +159,11 @@ public class OptimisticLockingPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		then(ok1).isTrue();
-		then(ok2).isTrue();
 		verify(interfaze, times(0)).addMethod(any(Method.class));
-		verify(topLevelClass, times(0)).addMethod(any(Method.class));
+		// verify(topLevelClass, times(0)).addMethod(any(Method.class));
 	}
 
 	@Test
@@ -176,14 +174,12 @@ public class OptimisticLockingPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		then(ok1).isTrue();
-		then(ok2).isTrue();
-		verify(plugin, times(2)).addMethod(eq(method), eq(introspectedTable));
+		verify(plugin, times(1)).addMethod(eq(method), eq(introspectedTable));
 		verify(interfaze).addMethod(eq(withLock));
-		verify(topLevelClass).addMethod(eq(withLock));
+		// verify(topLevelClass).addMethod(eq(withLock));
 	}
 
 	@Test

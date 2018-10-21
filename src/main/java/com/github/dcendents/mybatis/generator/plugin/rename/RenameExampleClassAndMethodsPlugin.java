@@ -200,19 +200,7 @@ public class RenameExampleClassAndMethodsPlugin extends PluginAdapter {
 	}
 
 	@Override
-	public boolean clientCountByExampleMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
 	public boolean clientDeleteByExampleMethodGenerated(Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
-	public boolean clientDeleteByExampleMethodGenerated(Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		return renameMethod(method);
 	}
@@ -224,19 +212,7 @@ public class RenameExampleClassAndMethodsPlugin extends PluginAdapter {
 	}
 
 	@Override
-	public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
 	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
-	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		return renameMethod(method);
 	}
@@ -248,19 +224,7 @@ public class RenameExampleClassAndMethodsPlugin extends PluginAdapter {
 	}
 
 	@Override
-	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
 	public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
-	public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		return renameMethod(method);
 	}
@@ -272,19 +236,7 @@ public class RenameExampleClassAndMethodsPlugin extends PluginAdapter {
 	}
 
 	@Override
-	public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
 	public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		return renameMethod(method);
-	}
-
-	@Override
-	public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		return renameMethod(method);
 	}

@@ -280,12 +280,10 @@ public class AlterResultMapPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameResultMapAttribute(eq(method), eq(introspectedTable));
+		verify(plugin, times(1)).renameResultMapAttribute(eq(method), eq(introspectedTable));
 	}
 
 	@Test
@@ -296,12 +294,10 @@ public class AlterResultMapPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameResultMapAttribute(eq(method), eq(introspectedTable));
+		verify(plugin, times(1)).renameResultMapAttribute(eq(method), eq(introspectedTable));
 	}
 
 	@Test
@@ -312,12 +308,10 @@ public class AlterResultMapPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByPrimaryKeyMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameResultMapAttribute(eq(method), eq(introspectedTable));
+		verify(plugin, times(1)).renameResultMapAttribute(eq(method), eq(introspectedTable));
 	}
 
 	@Test
@@ -328,12 +322,10 @@ public class AlterResultMapPluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectAllMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectAllMethodGenerated(method, topLevelClass, introspectedTable);
 
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameResultMapAttribute(eq(method), eq(introspectedTable));
+		verify(plugin, times(1)).renameResultMapAttribute(eq(method), eq(introspectedTable));
 	}
 
 }

@@ -377,12 +377,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByPrimaryKeyMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -394,12 +392,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientCountByExampleMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientCountByExampleMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -411,12 +407,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientDeleteByExampleMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -428,12 +422,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientDeleteByPrimaryKeyMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -445,12 +437,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientInsertMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientInsertMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -462,12 +452,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -479,12 +467,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -496,12 +482,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -513,12 +497,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -530,12 +512,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -547,12 +527,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByPrimaryKeySelectiveMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByPrimaryKeySelectiveMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -564,12 +542,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -581,12 +557,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -598,12 +572,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientInsertSelectiveMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -615,12 +587,10 @@ public class CreateSubPackagePluginTest {
 
 		// When
 		boolean ok1 = plugin.clientSelectAllMethodGenerated(method, interfaze, introspectedTable);
-		boolean ok2 = plugin.clientSelectAllMethodGenerated(method, topLevelClass, introspectedTable);
-
+		
 		// Then
 		assertThat(ok1).isTrue();
-		assertThat(ok2).isTrue();
-		verify(plugin, times(2)).renameMethod(eq(method));
+		verify(plugin, times(1)).renameMethod(eq(method));
 	}
 
 	@Test
@@ -631,7 +601,7 @@ public class CreateSubPackagePluginTest {
 		given(modelProperties.getOriginalType()).willReturn(type);
 
 		// When
-		boolean ok = plugin.clientGenerated(interfaze, topLevelClass, introspectedTable);
+		boolean ok = plugin.clientGenerated(interfaze, introspectedTable);
 
 		// Then
 		assertThat(ok).isTrue();
@@ -643,10 +613,10 @@ public class CreateSubPackagePluginTest {
 		assertThat(interfaceType).isNotNull();
 		assertThat(interfaceType.getFullyQualifiedName()).isEqualTo(type);
 
-		verify(topLevelClass).addImportedType(typeCaptor.capture());
-		FullyQualifiedJavaType classType = typeCaptor.getValue();
-		assertThat(classType).isNotNull();
-		assertThat(classType.getFullyQualifiedName()).isEqualTo(type);
+		// verify(topLevelClass).addImportedType(typeCaptor.capture());
+		// FullyQualifiedJavaType classType = typeCaptor.getValue();
+		// assertThat(classType).isNotNull();
+		// assertThat(classType.getFullyQualifiedName()).isEqualTo(type);
 	}
 
 	@Test
@@ -657,7 +627,7 @@ public class CreateSubPackagePluginTest {
 		given(modelProperties.getOriginalType()).willReturn(type);
 
 		// When
-		boolean ok = plugin.clientGenerated(null, null, null);
+		boolean ok = plugin.clientGenerated(null,  null);
 
 		// Then
 		assertThat(ok).isTrue();
